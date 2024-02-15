@@ -1,7 +1,6 @@
 -- Q9 -- Lahman Baseball Project -- The Hackstreet Boys -- Jared Baker
-/*
-Which managers have won the TSN Manager of the Year award in both the National League (NL) and the American League (AL)? Give their full name and the teams that they were managing when they won the award.
-*/
+
+-- Which managers have won the TSN Manager of the Year award in both the National League (NL) and the American League (AL)? Give their full name and the teams that they were managing when they won the award.
 
 
 WITH windata AS (SELECT yearid,
