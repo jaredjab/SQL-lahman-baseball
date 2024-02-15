@@ -6,29 +6,24 @@
 --REPORT: Firstname | Lastname | num_2016_hr
 
 
-WITH players AS ( (SELECT playerid, namefirst, namelast, LEFT(debut,4)::numeric AS debut_year, LEFT(finalgame,4)::numeric AS final_year
-						FROM people)
+WITH players AS (SELECT playerid, namefirst, namelast
+				 FROM people
+				 WHERE (LEFT(finalgame,4)::int - LEFT(debut,4)::int)>= 10),
 
-SELECT namefirst, namelast, final_year - debut_year AS years_in_league, yearid, hr
-FROM players_decade INNER JOIN batting USING (playerid);
+	 hr_2016 AS (SELECT playerid,hr AS num_2016_hr
+				 FROM batting
+				 WHERE yearid = 2016
+					AND hr >= 1)
 
-
-
-
-
-SELECT playerid, SUM(hr)
-FROM batting
-WHERE playerid = 'zwilldu01'
-GROUP BY playerid
-
-ORDER BY playerid DESC
-
--- 'zwilldu01', 30 hrs
-
-
-
-
-
-
-
---Mark Trumbo, 47
+SELECT namefirst, namelast, num_2016_hr
+FROM batting AS b 
+	JOIN players AS p USING (playerid)
+	JOIN hr_2016 AS h USING (playerid)
+GROUP BY namefirst, namelast, num_2016_hr
+HAVING MAX(hr) = num_2016_hr
+ORDER BY num_2016_hr DESC;
+				 
+				 
+				 
+				 
+				 

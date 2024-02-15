@@ -50,18 +50,7 @@ FROM most_wins AS m INNER JOIN teams AS t USING (yearid)
 WHERE wswin = 'Y'
  AND most_wins_total = w
  
-----
 
-WITH most_wins AS (SELECT yearid, MAX(w) AS most_wins_total
-					FROM teams
-					WHERE yearid BETWEEN 1970 AND 2016
-					GROUP BY yearid
-					ORDER BY yearid)
-					
-SELECT ROUND((COUNT(yearid)::numeric / (MAX(yearid) - MIN(yearid)) * 100),2) AS percent_of_time_no_wins
-FROM most_wins AS m INNER JOIN teams AS t USING (yearid)
-WHERE wswin = 'Y'
- AND most_wins_total = w
-
+--26.09%
 
 
