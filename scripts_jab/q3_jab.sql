@@ -4,19 +4,17 @@ Find all players in the database who played at Vanderbilt University. Create a l
 */
 
 
-SELECT schoolid FROM schools
-WHERE schoolname ILIKE '%vanderbilt%'; -- Finds Vanderbilt schoolid
-
+WITH vandyplayers AS (
+    SELECT DISTINCT playerid 
+    FROM collegeplaying
+    WHERE schoolid = 'vandy')
 
 SELECT namefirst,
     namelast,
-    schoolid,
     SUM(salary)::text::money AS total_mlb_salary
-FROM collegeplaying AS cp
-    JOIN schools AS sc USING (schoolid)
+FROM vandyplayers AS vp
     JOIN people AS pp USING (playerid)
     JOIN salaries AS sa USING (playerid)
-WHERE schoolid = 'vandy'
-GROUP BY namefirst, namelast, schoolid
+GROUP BY namefirst, namelast
 ORDER BY total_mlb_salary DESC;
--- David Price: $245,553,888.00
+-- David Price: $81,851,296.00

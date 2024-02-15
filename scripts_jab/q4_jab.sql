@@ -4,20 +4,17 @@ Using the fielding table, group players into three groups based on their positio
 */
 
 
-WITH positions AS (SELECT playerid,
-                       CASE WHEN pos = 'OF' THEN 'Outfield'
-                            WHEN pos IN ('SS', '1B', '2B', '3B') THEN 'Infield'
-                            WHEN pos IN ('P', 'C') THEN 'Battery'
-                       END AS position
-                   FROM fielding)
-SELECT position,
+SELECT 
+    CASE WHEN pos = 'OF' THEN 'Outfield'
+         WHEN pos IN ('SS', '1B', '2B', '3B') THEN 'Infield'
+         WHEN pos IN ('P', 'C') THEN 'Battery'
+    END AS position,
     SUM(po) AS total_putouts
 FROM fielding AS f
-    JOIN positions AS p USING (playerid)
 WHERE yearid = '2016'
 GROUP BY position
 ORDER BY total_putouts DESC;
 -- Number of putouts in 2016 --
-     -- Infield:  689,431
-     -- Battery:  317,472
-     -- Outfield: 285,322
+     -- Infield:  58,934
+     -- Battery:  41,424
+     -- Outfield: 29,560

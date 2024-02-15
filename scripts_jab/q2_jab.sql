@@ -21,4 +21,4 @@ WHERE playerid = (SELECT playerid
                  ORDER BY height
                  LIMIT 1)
 GROUP BY playerid, total_games_played, team_name;
--- Eddie played in 1 game for the St. Louis Browns
+-- Eddie Gaedel played in 1 game for the St. Louis Browns
